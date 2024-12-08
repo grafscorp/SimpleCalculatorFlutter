@@ -1,5 +1,5 @@
 name: calcul
-description: A new Flutter project.
+description: Simple calculation without exponentiation.
 publish_to: 'none'
 version: 0.1.0
 
@@ -7,16 +7,16 @@ environment:
   sdk: '>=3.0.1 <4.0.0'
 
 dependencies:
-  audioplayers: ^4.1.0
-  dart_eval: ^0.6.0
-  window_manager: ^0.3.4
+  audioplayers: ^6.1.0
+  dart_eval: ^0.7.10
+  window_manager: ^0.4.3
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
