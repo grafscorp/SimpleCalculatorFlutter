@@ -1,3 +1,3 @@
 # calcul
 
-A new Flutter project.
+Это первый опыт написания программы под Windows с использованием Flutter. 
