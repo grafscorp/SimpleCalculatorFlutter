@@ -5,7 +5,7 @@ import 'package:window_manager/window_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
-  WindowOptions winop = WindowOptions(
+  WindowOptions winop = const WindowOptions(
     maximumSize: Size(410, 705),
     minimumSize: Size(410, 705),
     size: Size(410, 705),
@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "My Calc",
+      title: "My Calculator",
       home: main_page(),
       debugShowCheckedModeBanner: false,
     );
