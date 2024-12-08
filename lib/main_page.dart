@@ -47,6 +47,13 @@ class page extends State<main_page> {
                 text_field_controller.text = "0";
                 break;
               case "=":
+                //if last symbol is operator, its remove
+                if (int.tryParse(text_field_controller.text
+                        .substring(text_field_controller.text.length - 1)) ==
+                    null) {
+                  text_field_controller.text = text_field_controller.text
+                      .substring(0, text_field_controller.text.length - 1);
+                }
                 try {
                   var res = eval(text_field_controller.text);
                   if (res % 1 == 0) {
@@ -62,10 +69,21 @@ class page extends State<main_page> {
               case "^":
                 break;
               default:
-                if (text_field_controller.text != "0")
+                if ((text_field_controller.text == "0") ||
+                    (text_field_controller.text == 'Infinity')) {
+                  if (int.tryParse(_text) != null)
+                    text_field_controller.text = _text;
+                } else {
+                  // if last symbol is operator and enter is operator they are replace
+                  if (int.tryParse(_text) == null &&
+                      int.tryParse(text_field_controller.text.substring(
+                              text_field_controller.text.length - 1)) ==
+                          null) {
+                    text_field_controller.text = text_field_controller.text
+                        .substring(0, text_field_controller.text.length - 1);
+                  }
                   text_field_controller.text += _text;
-                else
-                  text_field_controller.text = _text;
+                }
                 break;
             }
           });
@@ -82,11 +100,12 @@ class page extends State<main_page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cacl Nagibator"),
+        title: Text("Caclulator Nagibator"),
         centerTitle: true,
         leading: const Icon(Icons.calculate),
         backgroundColor: Colors.purpleAccent,
         actions: <Widget>[
+          //Sound Button
           IconButton(
               onPressed: () {
                 setState(() {
