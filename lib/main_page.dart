@@ -5,6 +5,7 @@ import 'dart:ffi';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:calcul/additional_widgets.dart';
 import 'package:dart_eval/dart_eval.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class main_page extends StatefulWidget {
@@ -74,17 +75,45 @@ class page extends State<main_page> {
                   if (int.tryParse(_text) != null)
                     text_field_controller.text = _text;
                 } else {
-                  // if last symbol is operator and enter is operator they are replace
-                  if (int.tryParse(_text) == null &&
-                      int.tryParse(text_field_controller.text.substring(
-                              text_field_controller.text.length - 1)) ==
+                  //*!TODO
+                  if (int.tryParse(_text) == null) {
+                    //if enter is '(' or ')'
+                    if ((_text == '(' || _text == ')')) {
+                      if (int.tryParse(text_field_controller.text.substring(
+                              text_field_controller.text.length - 1)) !=
                           null) {
-                    text_field_controller.text = text_field_controller.text
-                        .substring(0, text_field_controller.text.length - 1);
+                        if (_text == ')') text_field_controller.text += _text;
+                      } else if ((_text == ')' &&
+                          (int.tryParse(text_field_controller.text.substring(
+                                  text_field_controller.text.length - 1)) ==
+                              null))) {
+                        text_field_controller.text += _text;
+                      }
+                      break;
+                    }
+                    // if last symbol is operator and enter is operator they are replace
+                    else if (int.tryParse(text_field_controller.text.substring(
+                            text_field_controller.text.length - 1)) ==
+                        null) {
+                      text_field_controller.text = text_field_controller.text
+                          .substring(0, text_field_controller.text.length - 1);
+                    }
                   }
                   text_field_controller.text += _text;
+                  break;
                 }
-                break;
+              // if last symbol is operator and enter is operator they are replace
+              //   else if (((int.tryParse(_text) == null) &&
+              //           (_text != ')' || _text != '(')) &&
+              //       int.tryParse(text_field_controller.text.substring(
+              //               text_field_controller.text.length - 1)) ==
+              //           null) {
+              //     text_field_controller.text = text_field_controller.text
+              //         .substring(0, text_field_controller.text.length - 1);
+              //   }
+              //   text_field_controller.text += _text;
+              // }
+              // break;
             }
           });
         },
