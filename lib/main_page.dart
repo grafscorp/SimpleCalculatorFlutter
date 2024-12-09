@@ -1,11 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ffi';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:calcul/additional_widgets.dart';
 import 'package:dart_eval/dart_eval.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class main_page extends StatefulWidget {
@@ -49,9 +46,12 @@ class page extends State<main_page> {
                 break;
               case "=":
                 //if last symbol is operator, its remove
-                if (int.tryParse(text_field_controller.text
-                        .substring(text_field_controller.text.length - 1)) ==
-                    null) {
+                if (int.tryParse(text_field_controller.text.substring(
+                            text_field_controller.text.length - 1)) ==
+                        null &&
+                    (text_field_controller.text.substring(
+                            text_field_controller.text.length - 1)) !=
+                        ')') {
                   text_field_controller.text = text_field_controller.text
                       .substring(0, text_field_controller.text.length - 1);
                 }
@@ -63,7 +63,8 @@ class page extends State<main_page> {
                     text_field_controller.text = res.toString();
                   }
                 } catch (e) {
-                  text_field_controller.text = "0";
+                  print(e);
+                  text_field_controller.text = "Error";
                 }
 
                 break;
@@ -71,30 +72,34 @@ class page extends State<main_page> {
                 break;
               default:
                 if ((text_field_controller.text == "0") ||
-                    (text_field_controller.text == 'Infinity')) {
+                    (text_field_controller.text == 'Infinity') ||
+                    text_field_controller.text == 'Error') {
                   if (int.tryParse(_text) != null)
                     text_field_controller.text = _text;
                 } else {
                   //*!TODO
                   if (int.tryParse(_text) == null) {
-                    //if enter is '(' or ')'
-                    if ((_text == '(' || _text == ')')) {
+                    if (_text == '(' || _text == ')') {
                       if (int.tryParse(text_field_controller.text.substring(
-                              text_field_controller.text.length - 1)) !=
+                              text_field_controller.text.length - 1)) ==
                           null) {
-                        if (_text == ')') text_field_controller.text += _text;
-                      } else if ((_text == ')' &&
-                          (int.tryParse(text_field_controller.text.substring(
-                                  text_field_controller.text.length - 1)) ==
-                              null))) {
-                        text_field_controller.text += _text;
+                        if (_text == ")" &&
+                            (text_field_controller.text.substring(
+                                    text_field_controller.text.length - 1) !=
+                                ')')) {
+                          text_field_controller.text =
+                              text_field_controller.text.substring(
+                                  0, text_field_controller.text.length - 1);
+                        }
                       }
-                      break;
                     }
-                    // if last symbol is operator and enter is operator they are replace
+                    //if enter is '(' or ')'
                     else if (int.tryParse(text_field_controller.text.substring(
-                            text_field_controller.text.length - 1)) ==
-                        null) {
+                                text_field_controller.text.length - 1)) ==
+                            null &&
+                        (text_field_controller.text.substring(
+                                text_field_controller.text.length - 1) !=
+                            ')')) {
                       text_field_controller.text = text_field_controller.text
                           .substring(0, text_field_controller.text.length - 1);
                     }
